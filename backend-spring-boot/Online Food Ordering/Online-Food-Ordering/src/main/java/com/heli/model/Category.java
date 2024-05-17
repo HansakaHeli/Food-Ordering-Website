@@ -1,5 +1,6 @@
 package com.heli.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,6 +11,13 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "food_category_id")
     private int id;
+
+    @Column(name = "name")
+    private String name;
+
+    @ManyToOne
+    @JsonIgnore
+    private Restaurant restaurant;
 
 
 }

@@ -3,26 +3,26 @@ package com.heli.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name = "ingredients_item")
-public class IngredientsItem {
+@Table(name = "ingredient_category")
+public class IngredientCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ingredient_id")
+    @Column(name = "ingredient_category_id")
     private int id;
 
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
-    private IngredientCategory category;
-
     @JsonIgnore
     @ManyToOne
     private Restaurant restaurant;
 
-    @Column(name = "is_in_stoke")
-    private boolean inStoke = true;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<IngredientsItem> ingredientsItems = new ArrayList<>();
 
 }
