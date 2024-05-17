@@ -33,7 +33,7 @@ public class User {
 
     // Favourites, Use this in dto
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer") 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer",orphanRemoval = true)
     private List<Address> addresses = new ArrayList<>();
 
 }
