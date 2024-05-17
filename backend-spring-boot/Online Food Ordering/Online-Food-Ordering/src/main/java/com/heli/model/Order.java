@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -17,10 +17,12 @@ public class Order {
     @Column(name = "order_id")
     private int id;
 
-    @ManyToOne
+    @ManyToOne // bi
+    @JoinColumn(name = "customer_id")
     private User customer;
 
-    @ManyToOne
+    @ManyToOne // bi
+    @JoinColumn(name = "restaurant_id")
     @JsonIgnore
     private Restaurant restaurant;
 
@@ -33,10 +35,12 @@ public class Order {
     @Column(name = "order_date")
     private Date createdAt;
 
-    @ManyToOne
+    @ManyToOne // uni
+    @JoinColumn(name = "address_id")
     private Address deliveryAddress;
 
-    @OneToMany
+    @OneToMany // uni
+    @JoinColumn(name = "order_id")
     private List<OrderItem> items;
 
     //private Payment payment;
