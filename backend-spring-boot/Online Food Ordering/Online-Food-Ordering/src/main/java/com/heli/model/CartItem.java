@@ -15,8 +15,9 @@ public class CartItem {
     @Column(name = "cart_item_id")
     private int id;
 
-    @ManyToOne
+    @ManyToOne //bi
     @JsonIgnore
+    @JoinColumn(name = "cart_id")
     private Cart cart;
 
     @Column(name = "quantity")

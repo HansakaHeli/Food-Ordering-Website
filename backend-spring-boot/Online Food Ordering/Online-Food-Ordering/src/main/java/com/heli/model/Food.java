@@ -45,7 +45,12 @@ public class Food {
     @Column(name = "is_seasonable")
     private boolean isSeasonable;
 
-    @ManyToMany
+    @ManyToMany // uni
+    @JoinTable(
+            name = "food_ingredients_item",
+            joinColumns = @JoinColumn(name = "food_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id")
+    )
     private List<IngredientsItem> ingredientItems = new ArrayList<>();
 
     @Column(name = "creation_date")

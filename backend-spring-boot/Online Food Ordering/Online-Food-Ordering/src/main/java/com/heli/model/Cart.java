@@ -14,12 +14,13 @@ public class Cart {
     @Column(name = "cart_id")
     private int id;
 
-    @OneToOne
+    @OneToOne // uni
+    @JoinColumn(name = "customer_id")
     private User customer;
 
     @Column(name = "total")
     private Long total;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL) // bi
     private List<CartItem> item = new ArrayList<>();
 }
