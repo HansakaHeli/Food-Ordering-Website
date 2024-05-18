@@ -17,7 +17,8 @@ public class Restaurant {
     @Column(name = "restaurant_id")
     private int id;
 
-    @OneToOne
+    @OneToOne // uni
+    @JoinColumn(name = "owner_id")
     private User owner;
 
     @Column(name = "name")
@@ -29,7 +30,7 @@ public class Restaurant {
     @Column(name = "cuisine_type")
     private String cuisineType;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL) // uni
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -39,7 +40,7 @@ public class Restaurant {
     @Column(name = "opening_hours")
     private String openingHours;
 
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)  // bi
     private List<Order> orders = new ArrayList<>();
 
     @ElementCollection
@@ -53,7 +54,7 @@ public class Restaurant {
     private boolean open;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL) // bi
     private List<Food> foods = new ArrayList<>();
     // Use JsonIgnore here , because I don't want to food list inside Restaurant response,
     // I create separate API for get food list response

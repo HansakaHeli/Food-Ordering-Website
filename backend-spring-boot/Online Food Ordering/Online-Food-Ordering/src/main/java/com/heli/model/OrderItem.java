@@ -13,7 +13,8 @@ public class OrderItem {
     @Column(name = "item_id")
     private int id;
 
-    @ManyToOne
+    @ManyToOne // uni
+    @JoinColumn(name = "food_id")
     private Food food;
 
     @Column(name = "quantity")
@@ -22,7 +23,7 @@ public class OrderItem {
     @Column(name = "total_price")
     private Long totalPrice;
 
-    private List<String> ingredients;
+    //private List<String> ingredients;
 
 
 

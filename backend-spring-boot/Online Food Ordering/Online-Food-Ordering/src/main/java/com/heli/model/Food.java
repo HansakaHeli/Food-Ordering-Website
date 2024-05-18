@@ -24,7 +24,8 @@ public class Food {
     @Column(name = "price")
     private Long price;
 
-    @ManyToOne
+    @ManyToOne // uni
+    @JoinColumn(name = "food_category_id")
     private Category foodCategory;
 
     @ElementCollection
@@ -34,7 +35,8 @@ public class Food {
     @Column(name = "available")
     private boolean available;
 
-    @ManyToOne
+    @ManyToOne // bi
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
     @Column(name = "is_veg")

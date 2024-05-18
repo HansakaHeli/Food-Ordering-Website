@@ -19,10 +19,11 @@ public class IngredientCategory {
     private String name;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne // uni
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL) // bi
     private List<IngredientsItem> ingredientsItems = new ArrayList<>();
 
 }

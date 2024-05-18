@@ -15,11 +15,13 @@ public class IngredientsItem {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
+    @ManyToOne // bi
+    @JoinColumn(name = "ingredient_category_id")
     private IngredientCategory category;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne // uni
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
     @Column(name = "is_in_stoke")
