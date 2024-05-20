@@ -32,7 +32,7 @@ public class AppConfig {
                 .csrf(csrf->csrf.disable())
                 .cors(cors->cors.configurationSource(corsConfigrationSourse()));
 
-        return null;
+        return http.build();
     }
 
     private CorsConfigurationSource corsConfigrationSourse() {

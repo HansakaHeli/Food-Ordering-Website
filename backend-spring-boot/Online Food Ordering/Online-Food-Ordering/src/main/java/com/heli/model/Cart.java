@@ -1,12 +1,18 @@
 package com.heli.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "cart")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cart {
 
     @Id
@@ -14,7 +20,7 @@ public class Cart {
     @Column(name = "cart_id")
     private int id;
 
-    @OneToOne // uni
+    @OneToOne(cascade = CascadeType.ALL) // uni
     @JoinColumn(name = "customer_id")
     private User customer;
 

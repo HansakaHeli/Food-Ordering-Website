@@ -1,6 +1,7 @@
 package com.heli.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "password")
     private String password;
 
@@ -41,5 +43,6 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer",orphanRemoval = true)
     private List<Address> addresses = new ArrayList<>();
+
 
 }
