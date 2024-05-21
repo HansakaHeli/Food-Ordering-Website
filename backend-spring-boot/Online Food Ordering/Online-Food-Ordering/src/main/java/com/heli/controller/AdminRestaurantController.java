@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/admin/restaurant")
+@RequestMapping("/api/admin/restaurants")
 public class AdminRestaurantController {
 
     @Autowired
@@ -48,7 +48,6 @@ public class AdminRestaurantController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteRestaurant(
-            @RequestBody CreateRestaurantRequest req,
             @RequestHeader("Authorization") String jwt,
             @PathVariable int id
 
@@ -66,7 +65,6 @@ public class AdminRestaurantController {
 
     @PutMapping("/{id}/status")
     public ResponseEntity<Restaurant> updateRestaurantStatus(
-            @RequestBody CreateRestaurantRequest req,
             @RequestHeader("Authorization") String jwt,
             @PathVariable int id
 
@@ -79,9 +77,10 @@ public class AdminRestaurantController {
         return new ResponseEntity<>(restaurant, HttpStatus.OK);
     }
 
+    // Favourites
+
     @GetMapping("/user")
-    public ResponseEntity<Restaurant> findRestaurantBuUserId(
-            @RequestBody CreateRestaurantRequest req,
+    public ResponseEntity<Restaurant> findRestaurantByUserId(
             @RequestHeader("Authorization") String jwt
 
     ) throws Exception {
