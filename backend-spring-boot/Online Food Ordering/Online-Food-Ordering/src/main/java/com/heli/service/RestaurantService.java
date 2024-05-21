@@ -16,7 +16,7 @@ public interface RestaurantService {
 
     public List<Restaurant> getAllRestaurant(); // only admin can do this
 
-    public List<Restaurant> searchRestaurant();
+    public List<Restaurant> searchRestaurant(String keyword);
 
     public Restaurant findRestaurantById(int id) throws Exception;
 
