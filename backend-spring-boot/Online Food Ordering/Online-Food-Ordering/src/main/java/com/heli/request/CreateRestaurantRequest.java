@@ -1,0 +1,21 @@
+package com.heli.request;
+
+import com.heli.model.Address;
+import com.heli.model.ContactInformation;
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+public class CreateRestaurantRequest {
+
+    private int id;
+    private String name;
+    private String description;
+    private String cuisineType;
+    private Address address;
+    private ContactInformation contactInformation;
+    private String openingHours;
+    private List<String> images;
+
+}

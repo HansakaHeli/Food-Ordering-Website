@@ -61,6 +61,7 @@ public class AuthController {
 
         User savedUser = userRepository.save(createdUser);
 
+        // Creat cart fot the registerd user
         Cart cart = new Cart();
         cart.setCustomer(savedUser);
         cartRepository.save(cart);
