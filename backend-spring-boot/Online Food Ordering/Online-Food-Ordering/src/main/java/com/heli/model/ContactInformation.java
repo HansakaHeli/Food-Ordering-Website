@@ -1,16 +1,20 @@
 package com.heli.model;
 
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Embeddable
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ContactInformation {
 
-    private String emil;
+    private String email;
     private String mobile;
     private String twitter;
-    private String instragram;
+    private String instagram;
 
 
 }
-
-// Create getters and setters
