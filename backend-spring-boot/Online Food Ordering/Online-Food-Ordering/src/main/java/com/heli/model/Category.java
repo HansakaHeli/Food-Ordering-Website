@@ -2,9 +2,15 @@ package com.heli.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "food_category")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Category {
 
     @Id
