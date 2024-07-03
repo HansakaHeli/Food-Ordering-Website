@@ -2,12 +2,18 @@ package com.heli.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "ingredient_category")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class IngredientCategory {
 
     @Id
