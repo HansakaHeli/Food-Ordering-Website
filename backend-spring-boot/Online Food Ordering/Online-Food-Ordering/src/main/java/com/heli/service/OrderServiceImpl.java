@@ -1,17 +1,17 @@
 package com.heli.service;
 
-import com.heli.model.Address;
-import com.heli.model.Order;
-import com.heli.model.Restaurant;
-import com.heli.model.User;
+import com.heli.model.*;
 import com.heli.repository.*;
 import com.heli.request.OrderRequest;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -55,28 +55,77 @@ public class OrderServiceImpl implements OrderService{
         createOrder.setDeliveryAddress(savedAddress);
         createOrder.setRestaurant(restaurant);
 
+        Cart cart = cartService.findCartByUserId(user.getId());
+
+        List<OrderItem> orderItems = new ArrayList<>();
+
+        for (CartItem cartItem: cart.getItem()){
+            OrderItem orderItem = new OrderItem();
+            orderItem.setFood(cartItem.getFood());
+            orderItem.setQuantity(cartItem.getQuantity());
+            orderItem.setTotalPrice(cartItem.getTotalPrice());
+
+            OrderItem savedOrderItem = orderItemRepository.save(orderItem);
+            orderItems.add(savedOrderItem);
+        }
+
+        Long totalPrice = cartService.calculateCartTotals(cart);
+
+        createOrder.setItems(orderItems);
+        createOrder.setTotalPrice(totalPrice);
+
+        Order savedOrder = orderRepository.save(createOrder);
+        restaurant.getOrders().add(savedOrder);
+
+        return createOrder;
 
     }
 
     @Override
     public Order updateOrder(int orderId, String orderStatus) throws Exception {
-        return null;
+
+        Order order = findOrderById(orderId);
+        if (orderStatus.equals("OUT_FOR_DELIVERY")
+                || orderStatus.equals("DELIVERED")
+                || orderStatus.equals("COMPLETED")
+                || orderStatus.equals("PENDING")
+        ){
+            order.setOrderStatus(orderStatus);
+            return orderRepository.save(order);
+        }
+        throw new Exception("Please select a valid order status");
+
     }
 
     @Override
     public void cancelOrder(int orderId) throws Exception {
-
+        Order order = findOrderById(orderId);
+        orderRepository.deleteById(orderId);
     }
 
     @Override
     public List<Order> getUserOrders(int userId) throws Exception {
-        return null;
+        return orderRepository.findByCustomerId(userId);
     }
 
     @Override
     public List<Order> getRestaurantOrder(int restaurantId, String orderStatus) throws Exception {
-        return null;
+        List<Order> orders = orderRepository.findByRestauratnId(restaurantId);
+        if(orderStatus!=null){
+            orders = orders.stream().filter(order ->
+                    order.getOrderStatus().equals(orderStatus)).collect(Collectors.toList());
+        }
+
+        return orders;
+    }
+
+    @Override
+    public Order findOrderById(int orderId) throws Exception {
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+        if(optionalOrder.isEmpty()){
+            throw new Exception("order not found");
+        }
+        return optionalOrder.get();
     }
 }
 
-// solve errors

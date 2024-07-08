@@ -55,6 +55,6 @@ public class Order {
     private int totalItem;
 
     @Column(name = "total_price")
-    private int totalPrice;
+    private Long totalPrice;
 
 }

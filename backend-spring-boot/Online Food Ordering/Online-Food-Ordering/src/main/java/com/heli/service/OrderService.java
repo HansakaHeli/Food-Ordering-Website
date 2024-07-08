@@ -18,4 +18,6 @@ public interface OrderService {
 
     public List<Order> getRestaurantOrder(int restaurantId, String orderStatus)throws Exception;
 
+    public Order findOrderById(int orderId)throws Exception;
+
 }
