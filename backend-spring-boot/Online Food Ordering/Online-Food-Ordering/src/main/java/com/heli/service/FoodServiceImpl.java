@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class FoodServiceImpl implements FoodService{
 
     @Autowired
-    private FoodRepository foodRepository;
+    private FoodRepository foodRepository; // Field Injection
 
     @Override
     public Food createFood(CreateFoodRequest req, Category category, Restaurant restaurant) {
