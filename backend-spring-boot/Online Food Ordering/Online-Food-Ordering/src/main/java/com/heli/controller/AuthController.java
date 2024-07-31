@@ -66,8 +66,12 @@ public class AuthController {
         cart.setCustomer(savedUser);
         cartRepository.save(cart);
 
-
+        // Create an authentication token using the user's email and password.
+        // UsernamePasswordAuthenticationToken is a standard implementation of the Authentication interface.
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
+
+        // Set the created authentication token in the SecurityContextHolder, which is a central place to store
+        // security-related information in the context of the current thread of execution.
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = jwtProvider.genarateToken(authentication);

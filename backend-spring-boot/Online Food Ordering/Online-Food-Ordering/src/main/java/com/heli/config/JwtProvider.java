@@ -20,7 +20,12 @@ public class JwtProvider {
 
     public String genarateToken(Authentication auth){
 
+        // Retrieve the collection of authorities (permissions or roles) granted to the authenticated user.
+        // The getAuthorities() method returns a collection of GrantedAuthority objects associated with the authentication token.
         Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+
+        // Convert the collection of GrantedAuthority objects into a string representation of roles.
+        // The populateAuthorities method is assumed to handle the transformation of the authorities into a readable format.
         String roles = populateAuthorities(authorities);
 
         String jwt = Jwts.builder().setIssuedAt(new Date())
