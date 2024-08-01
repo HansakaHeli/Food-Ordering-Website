@@ -65,6 +65,10 @@ public class Restaurant {
     // Use JsonIgnore here , because I don't want to food list inside Restaurant response,
     // I create separate API for get food list response
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vote> votes = new ArrayList<>();
+
 
 
 

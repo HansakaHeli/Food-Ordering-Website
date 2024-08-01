@@ -44,5 +44,9 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer",orphanRemoval = true)
     private List<Address> addresses = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vote> votes = new ArrayList<>();
+
 
 }
