@@ -12,4 +12,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     List<Restaurant> findBySearchQuery(String query);
     Restaurant findByOwnerId(int userId);
 
+    @Query("SELECT r.vote FROM Restaurant r WHERE r.id = :restaurantId")
+    Integer findVoteCountByRestaurantId(int restaurantId);
+
 }

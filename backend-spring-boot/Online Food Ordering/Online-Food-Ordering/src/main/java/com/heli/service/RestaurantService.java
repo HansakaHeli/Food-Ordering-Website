@@ -26,4 +26,6 @@ public interface RestaurantService {
 
     public Restaurant updateRestaurantStatus(int id) throws Exception; // Weather open or close
 
+    public Integer getVoteCountByRestaurantId(int restaurantId);
+
 }

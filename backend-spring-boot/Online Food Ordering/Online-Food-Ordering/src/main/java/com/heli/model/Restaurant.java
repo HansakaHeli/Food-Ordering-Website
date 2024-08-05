@@ -59,6 +59,9 @@ public class Restaurant {
     @Column(name = "is_open")
     private boolean open;
 
+    @Column(name = "vote")
+    private int vote;
+
     @JsonIgnore
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL) // bi
     private List<Food> foods = new ArrayList<>();

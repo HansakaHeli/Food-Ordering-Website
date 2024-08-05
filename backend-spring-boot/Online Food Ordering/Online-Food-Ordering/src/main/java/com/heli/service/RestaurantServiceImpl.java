@@ -116,4 +116,9 @@ public class RestaurantServiceImpl implements RestaurantService{
         return restaurantRepository.save(restaurant);
 
     }
+
+    @Override
+    public Integer getVoteCountByRestaurantId(int restaurantId) {
+        return restaurantRepository.findVoteCountByRestaurantId(restaurantId);
+    }
 }
