@@ -1,8 +1,11 @@
 package com.heli.service;
 
+import com.heli.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public class VoteServiceImpl implements VoteService {
@@ -12,6 +15,9 @@ public class VoteServiceImpl implements VoteService {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    private VoteRepository voteRepository;
 
     @Override
     public int getVotes(int restaurantId) {
@@ -24,6 +30,55 @@ public class VoteServiceImpl implements VoteService {
         }
 
         return votes;
+
+    }
+
+    @Override
+    public void upvote(int restaurantId, int userId) {
+
+        String voteKey = "restaurant:" + restaurantId + ":votes";
+        String userVoteKey = "restaurant:" + restaurantId + ":user:" + userId;
+
+        String currentVote = (String) redisTemplate.opsForValue().get(userVoteKey);
+
+        if ("downvote".equals(currentVote)) {
+            redisTemplate.opsForValue().increment(voteKey, 2);
+        } else if (currentVote == null) {
+            redisTemplate.opsForValue().increment(voteKey);
+        }
+
+        redisTemplate.opsForValue().set(userVoteKey, "upvote");
+
+    }
+
+    @Override
+    public void downvote(int restaurantId, int userId) {
+
+        String voteKey = "restaurant:" + restaurantId + ":votes";
+        String userVoteKey = "restaurant:" + restaurantId + ":user:" + userId;
+
+        String currentVote = (String) redisTemplate.opsForValue().get(userVoteKey);
+
+        if ("upvote".equals(currentVote)) {
+            redisTemplate.opsForValue().increment(voteKey, -2);
+        } else if (currentVote == null) {
+            redisTemplate.opsForValue().increment(voteKey, -1);
+        }
+
+        redisTemplate.opsForValue().set(userVoteKey, "downvote");
+
+    }
+
+    @Override
+    public void syncVotesToDatabase() {
+
+        Map<Object, Object> voteData = redisTemplate.opsForHash().entries("restaurant_votes");
+        for (Map.Entry<Object, Object> entry : voteData.entrySet()) {
+            String restaurantId = (String) entry.getKey();
+            Integer votes = (Integer) entry.getValue();
+            // Update the database with the current vote count
+            voteRepository.updateVoteCount(restaurantId, votes);
+        }
 
     }
 
